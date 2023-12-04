@@ -8,4 +8,3 @@ public interface BookRepository {
 
     List<Book> findAll();
 }
-
