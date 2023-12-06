@@ -1,11 +1,25 @@
 package mate.academy.bookstore.controller;
 
-import mate.academy.bookstore.model.Book;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import mate.academy.bookstore.dto.BookDto;
+import mate.academy.bookstore.dto.CreateBookRequestDto;
+import mate.academy.bookstore.service.BookService;
+import org.springframework.web.bind.annotation.*;
 
-public interface BookController {
-    Book save(Book book);
+@RequiredArgsConstructor
+@RestController
+@RequestMapping(value = "/api/books")
+public class BookController {
+    private final BookService bookService;
 
-    List<Book> findAll();
+    @PostMapping
+    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
+        return bookService.save(requestDto);
+    }
+
+    @GetMapping
+    public List<BookDto> findAll() {
+        return bookService.findAll();
+    }
 }
