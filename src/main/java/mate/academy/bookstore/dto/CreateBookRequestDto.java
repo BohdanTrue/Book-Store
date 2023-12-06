@@ -1,12 +1,9 @@
 package mate.academy.bookstore.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.math.BigDecimal;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
-//@JsonIgnoreProperties(ignoreUnknown = false)
 public class CreateBookRequestDto {
     private String title;
     private String author;

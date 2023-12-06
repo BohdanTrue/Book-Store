@@ -1,7 +1,6 @@
 package mate.academy.bookstore.dto;
 
 import lombok.Data;
-
 import java.math.BigDecimal;
 
 @Data

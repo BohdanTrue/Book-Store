@@ -1,11 +1,11 @@
 package mate.academy.bookstore.repository;
 
 import java.util.List;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
+import mate.academy.bookstore.exception.EntityNotFoundException;
 import mate.academy.bookstore.model.Book;
 import org.springframework.stereotype.Repository;
 
@@ -39,4 +39,15 @@ public class BookRepositoryImpl implements BookRepository {
             throw new RuntimeException("Can't get all books");
         }
     }
+
+    @Override
+    public Book getBookById(Long id) {
+        try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+            return entityManager.find(Book.class, id);
+        } catch (RuntimeException e) {
+            throw new EntityNotFoundException("Can't get book by id: " + id, e);
+        }
+    }
+
+
 }
