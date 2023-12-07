@@ -1,12 +1,13 @@
 package mate.academy.bookstore.repository;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.bookstore.model.Book;
 
 public interface BookRepository {
     Book save(Book book);
 
-    List<Book> findAll();
+    List<Book> getAll();
 
-    Book getBookById(Long id);
+    Optional<Book> getBookById(Long id);
 }
