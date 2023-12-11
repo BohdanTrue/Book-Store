@@ -25,14 +25,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAll() {
-        return bookRepository.getAll().stream()
+        return bookRepository.findAll().stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
 
     @Override
     public BookDto getBookById(Long id) {
-        Book book = bookRepository.getBookById(id).orElseThrow(
+        Book book = bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(CANNOT_GET_BOOK_BY_ID_EXCEPTION + id)
         );
         return bookMapper.toDto(book);
