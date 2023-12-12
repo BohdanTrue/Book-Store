@@ -14,6 +14,7 @@ public class TitleSpecificationProvider implements SpecificationProvider<Book> {
     }
 
     public Specification<Book> getSpecification(String[] params) {
-        return (root, query, criteriaBuilder) -> root.get("title").in(Arrays.stream(params).toArray());
+        return (root, query, criteriaBuilder)
+                -> root.get("title").in(Arrays.stream(params).toArray());
     }
 }

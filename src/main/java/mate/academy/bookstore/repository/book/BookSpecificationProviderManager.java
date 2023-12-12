@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class BookSpecificationProviderManager implements SpecificationProviderManager<Book> {
+    private static final String CANNOT_FIND_SPEC_PROVIDER_FOR_KEY
+            = "Can't find correct specification provider for key: ";
     private final List<SpecificationProvider<Book>> specificationProviderList;
 
     @Override
@@ -18,6 +20,6 @@ public class BookSpecificationProviderManager implements SpecificationProviderMa
                 .filter(k -> k.getKey().equals(key))
                 .findFirst()
                 .orElseThrow(() ->
-                        new RuntimeException("Can't find correct specification provider for key: " + key));
+                        new RuntimeException(CANNOT_FIND_SPEC_PROVIDER_FOR_KEY + key));
     }
 }
