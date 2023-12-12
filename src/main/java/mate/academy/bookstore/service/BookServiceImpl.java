@@ -52,7 +52,7 @@ public class BookServiceImpl implements BookService {
             updatedBook.setIsbn(bookRequestDto.getIsbn());
             updatedBook.setDescription(bookRequestDto.getDescription());
             updatedBook.setCoverImage(bookRequestDto.getCoverImage());
-            return bookMapper.toDto(updatedBook);
+            return bookMapper.toDto(bookRepository.save(updatedBook));
         }
         return bookMapper.toDto(bookRepository.save(bookMapper.toModel(bookRequestDto)));
     }
