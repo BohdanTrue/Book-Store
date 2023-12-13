@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookServiceImpl implements BookService {
     private static final String CANNOT_GET_BOOK_BY_ID_EXCEPTION = "Can't get book by id: ";
+    private static final String CANNOT_UPDATE_BOOK_BY_ID_EXCEPTION
+            = "Can't update book, because id not exist: ";
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
@@ -25,16 +27,31 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAll() {
-        return bookRepository.getAll().stream()
+        return bookRepository.findAll().stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
 
     @Override
     public BookDto getBookById(Long id) {
-        Book book = bookRepository.getBookById(id).orElseThrow(
+        Book book = bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(CANNOT_GET_BOOK_BY_ID_EXCEPTION + id)
         );
         return bookMapper.toDto(book);
+    }
+
+    @Override
+    public BookDto update(Long id, CreateBookRequestDto bookRequestDto) {
+        if (bookRepository.existsById(id)) {
+            Book updatedBook = bookMapper.toModel(bookRequestDto);
+            updatedBook.setId(id);
+            return bookMapper.toDto(bookRepository.save(updatedBook));
+        }
+        throw new EntityNotFoundException(CANNOT_UPDATE_BOOK_BY_ID_EXCEPTION + id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
     }
 }
