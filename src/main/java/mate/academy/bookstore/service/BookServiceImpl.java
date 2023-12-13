@@ -1,7 +1,6 @@
 package mate.academy.bookstore.service;
 
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.BookDto;
 import mate.academy.bookstore.dto.BookSearchParametersDto;
@@ -18,6 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookServiceImpl implements BookService {
     private static final String CANNOT_GET_BOOK_BY_ID_EXCEPTION = "Can't get book by id: ";
+    private static final String CANNOT_UPDATE_BOOK_BY_ID_EXCEPTION
+            = "Can't update book, because id not exist: ";
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final BookSpecificationBuilder bookSpecificationBuilder;
@@ -45,19 +46,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(Long id, CreateBookRequestDto bookRequestDto) {
-        Optional<Book> bookById = bookRepository.findById(id);
-        if (bookById.isPresent()) {
-            Book updatedBook = new Book();
+        if (bookRepository.existsById(id)) {
+            Book updatedBook = bookMapper.toModel(bookRequestDto);
             updatedBook.setId(id);
-            updatedBook.setAuthor(bookRequestDto.getAuthor());
-            updatedBook.setTitle(bookRequestDto.getTitle());
-            updatedBook.setPrice(bookRequestDto.getPrice());
-            updatedBook.setIsbn(bookRequestDto.getIsbn());
-            updatedBook.setDescription(bookRequestDto.getDescription());
-            updatedBook.setCoverImage(bookRequestDto.getCoverImage());
             return bookMapper.toDto(bookRepository.save(updatedBook));
         }
-        return bookMapper.toDto(bookRepository.save(bookMapper.toModel(bookRequestDto)));
+        throw new EntityNotFoundException(CANNOT_UPDATE_BOOK_BY_ID_EXCEPTION + id);
     }
 
     @Override
