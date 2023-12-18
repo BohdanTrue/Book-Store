@@ -59,7 +59,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
-    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+    public List<BookDto> search(BookSearchParametersDto searchParameters) {
         Specification<Book> bookSpecification = bookSpecificationBuilder.build(searchParameters);
         return bookRepository.findAll(bookSpecification).stream()
                 .map(bookMapper::toDto)
