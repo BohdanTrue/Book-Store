@@ -1,7 +1,9 @@
 package mate.academy.bookstore.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 public class UserRegistrationRequestDto {
     @Email
     private String email;
