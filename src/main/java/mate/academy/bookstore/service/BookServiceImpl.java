@@ -10,8 +10,8 @@ import mate.academy.bookstore.mapper.BookMapper;
 import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.repository.book.BookRepository;
 import mate.academy.bookstore.repository.book.BookSpecificationBuilder;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

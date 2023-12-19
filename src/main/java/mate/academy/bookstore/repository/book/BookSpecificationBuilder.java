@@ -46,5 +46,4 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
                         .getSpecificationProvider("author").getSpecification(titles)))
                 .orElse(spec);
     }
-
 }
