@@ -17,7 +17,7 @@ public class BookSpecificationProviderManager implements SpecificationProviderMa
     @Override
     public SpecificationProvider<Book> getSpecificationProvider(String key) {
         return specificationProviderList.stream()
-                .filter(k -> k.getKey().equals(key))
+                .filter(p -> p.getKey().equals(key))
                 .findFirst()
                 .orElseThrow(() ->
                         new RuntimeException(CANNOT_FIND_SPEC_PROVIDER_FOR_KEY + key));
