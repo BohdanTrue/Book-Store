@@ -8,6 +8,7 @@ import mate.academy.bookstore.mapper.UserMapper;
 import mate.academy.bookstore.model.User;
 import mate.academy.bookstore.repository.UserRepository;
 import mate.academy.bookstore.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,13 +17,15 @@ public class UserServiceImpl implements UserService {
     private static final String USER_ALREADY_REGISTERED_MESSAGE = "User is already registered";
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto) {
         if (userRepository.findUserByEmail(requestDto.getEmail()).isPresent()) {
             throw new RegistrationException(USER_ALREADY_REGISTERED_MESSAGE);
         }
-        User savedUser = userRepository.save(userMapper.toModel(requestDto));
-        return userMapper.toUserResponseDto(savedUser);
+        User savedUser = userMapper.toModel(requestDto);
+        savedUser.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        return userMapper.toUserResponseDto(userRepository.save(savedUser));
     }
 }
