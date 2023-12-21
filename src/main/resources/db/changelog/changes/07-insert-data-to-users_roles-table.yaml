@@ -1,6 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: 0
-      author: admin
+      id: insert-data-to-users_roles-table
+      author: Bohdan
       changes:
-        -
+        - insert:
+            tableName: users_roles
+            columns:
+              - column: {name: role_id, value: "1"}
+              - column: {name: user_id, value: "2"}
+        - insert:
+            tableName: users_roles
+            columns:
+              - column: { name: role_id, value: "2"}
+              - column: { name: user_id, value: "1"}
