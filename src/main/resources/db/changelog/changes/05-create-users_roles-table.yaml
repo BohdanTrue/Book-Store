@@ -20,3 +20,27 @@ databaseChangeLog:
                     foreignKeyName: fk_user_roles_roles
                     references: roles(id)
                     nullable: false
+  - changeSet:
+      id: update-users_roles-table
+      author: Bohdan
+      changes:
+        - dropTable:
+            tableName: users_roles
+
+  - changeSet:
+      id: create-updated-users_roles-table
+      author: Bohdan
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
