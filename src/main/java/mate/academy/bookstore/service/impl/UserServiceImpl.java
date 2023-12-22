@@ -6,7 +6,7 @@ import mate.academy.bookstore.dto.user.UserResponseDto;
 import mate.academy.bookstore.exception.RegistrationException;
 import mate.academy.bookstore.mapper.UserMapper;
 import mate.academy.bookstore.model.User;
-import mate.academy.bookstore.repository.UserRepository;
+import mate.academy.bookstore.repository.user.UserRepository;
 import mate.academy.bookstore.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

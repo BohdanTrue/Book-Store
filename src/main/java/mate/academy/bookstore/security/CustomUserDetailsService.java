@@ -1,7 +1,7 @@
 package mate.academy.bookstore.security;
 
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstore.repository.UserRepository;
+import mate.academy.bookstore.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
