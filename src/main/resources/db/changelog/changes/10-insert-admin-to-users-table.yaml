@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-admin-to-users-table
+      author: Bohdan
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: id, value: "1"}
+              - column: { name: email, value: "admin@gmail.com" }
+              - column: { name: password, value: "$2a$10$7xLQ3dgHJiVXFhvTnsjSH.H47cLLLK2vUViE6OQ43.0L.wDgkJJeu" }
+              - column: { name: first_name, value: "admin"}
+              - column: { name: last_name, value: "admin"}
+              - column: { name: shipping_address, value: "admin_address"}
