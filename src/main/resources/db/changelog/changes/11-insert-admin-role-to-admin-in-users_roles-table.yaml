@@ -2,9 +2,20 @@ databaseChangeLog:
   - changeSet:
       id: insert-admin-role-to-admin-in-users_roles-table
       author: Bohdan
+      preConditions:
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM users WHERE email='admin@gmail.com'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM roles WHERE role='ADMIN'
       changes:
         - insert:
             tableName: users_roles
             columns:
-              - column: {name: role_id, value: "1"}
-              - column: {name: user_id, value: "1"}
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email='admin@gmail.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role='ADMIN')
