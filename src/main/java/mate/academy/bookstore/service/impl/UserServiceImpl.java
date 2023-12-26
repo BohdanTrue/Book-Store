@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
             throw new RegistrationException(USER_ALREADY_REGISTERED_MESSAGE);
         }
         User savedUser = userMapper.toModel(requestDto);
-        Role userRole = roleRepository.findRoleByRole(Role.RoleName.USER);
+        Role userRole = roleRepository.findRoleByRole(Role.RoleName.ROLE_USER);
         savedUser.setRoles(Set.of(userRole));
         savedUser.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         return userMapper.toUserResponseDto(userRepository.save(savedUser));
