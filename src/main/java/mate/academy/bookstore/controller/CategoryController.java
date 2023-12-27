@@ -64,7 +64,8 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete a category by id", description = "Delete a category by a certain id")
+    @Operation(summary = "Delete a category by id",
+            description = "Delete a category by a certain id")
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
