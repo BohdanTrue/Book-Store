@@ -45,14 +45,15 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/{id}")
-    public CategoryResponseDto updateCategory(@PathVariable Long id, CategoryRequestDto requestDto) {
+    public CategoryResponseDto updateCategory(@PathVariable Long id,
+                                              @RequestBody @Valid CategoryRequestDto requestDto) {
         return categoryService.update(id, requestDto);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCategory(Long id) {
+    public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
 }
