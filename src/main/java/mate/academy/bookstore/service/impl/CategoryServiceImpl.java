@@ -3,8 +3,8 @@ package mate.academy.bookstore.service.impl;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.category.CategoryRequestDto;
 import mate.academy.bookstore.dto.category.CategoryResponseDto;
+import mate.academy.bookstore.exception.CategoryNotFoundException;
 import mate.academy.bookstore.mapper.CategoryMapper;
-import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.model.Category;
 import mate.academy.bookstore.repository.category.CategoryRepository;
 import mate.academy.bookstore.service.CategoryService;
@@ -19,6 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     private static final String CANNOT_FIND_CATEGORY_BY_ID = "Can't find category by id: ";
+    private static final String CANNOT_UPDATE_CATEGORY_BY_ID = "Can't update category by id: ";
 
     @Override
     public List<CategoryResponseDto> getAll(Pageable pageable) {
@@ -30,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDto getById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(CANNOT_FIND_CATEGORY_BY_ID + id));
+                .orElseThrow(() -> new CategoryNotFoundException(CANNOT_FIND_CATEGORY_BY_ID + id));
         return categoryMapper.toDto(category);
     }
 
@@ -46,6 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
             updatedCategory.setId(id);
             return categoryMapper.toDto(categoryRepository.save(updatedCategory));
         }
+        throw new CategoryNotFoundException(CANNOT_UPDATE_CATEGORY_BY_ID + id);
     }
 
     @Override
