@@ -1,5 +1,6 @@
 package mate.academy.bookstore.service.impl;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.category.CategoryRequestDto;
 import mate.academy.bookstore.dto.category.CategoryResponseDto;
@@ -11,15 +12,13 @@ import mate.academy.bookstore.service.CategoryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository categoryRepository;
-    private final CategoryMapper categoryMapper;
     private static final String CANNOT_FIND_CATEGORY_BY_ID = "Can't find category by id: ";
     private static final String CANNOT_UPDATE_CATEGORY_BY_ID = "Can't update category by id: ";
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public List<CategoryResponseDto> getAll(Pageable pageable) {

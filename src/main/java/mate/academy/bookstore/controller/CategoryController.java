@@ -1,11 +1,12 @@
 package mate.academy.bookstore.controller;
 
-import java.util.List;
-
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import mate.academy.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import mate.academy.bookstore.dto.category.CategoryRequestDto;
 import mate.academy.bookstore.dto.category.CategoryResponseDto;
+import mate.academy.bookstore.service.BookService;
 import mate.academy.bookstore.service.CategoryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final BookService bookService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
@@ -55,5 +57,11 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteById(id);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/{id}/books")
+    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id) {
+        return bookService.getBooksByCategoryId(id);
     }
 }
