@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-users_roles-table
+      author: Bohdan
+      changes:
+        - dropTable:
+            tableName: users_roles
