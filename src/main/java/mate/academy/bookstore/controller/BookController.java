@@ -5,9 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookstore.dto.book.BookDto;
+import mate.academy.bookstore.dto.book.BookRequestDto;
+import mate.academy.bookstore.dto.book.BookResponseDto;
 import mate.academy.bookstore.dto.book.BookSearchParametersDto;
-import mate.academy.bookstore.dto.book.CreateBookRequestDto;
 import mate.academy.bookstore.service.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -33,21 +33,21 @@ public class BookController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a new book", description = "Create a new book")
-    public BookDto save(@RequestBody @Valid CreateBookRequestDto requestDto) {
+    public BookResponseDto save(@RequestBody @Valid BookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all books")
-    public List<BookDto> getAll(Pageable pageable) {
+    public List<BookResponseDto> getAll(Pageable pageable) {
         return bookService.getAll(pageable);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get a book by id", description = "Get a book by a certain id")
-    public BookDto getBookById(@PathVariable Long id) {
+    public BookResponseDto getBookById(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
 
@@ -63,8 +63,8 @@ public class BookController {
     @PutMapping("/{id}")
     @Operation(summary = "Update a book", description = "Update a book by id, "
             + "if the book doesn't exist, it will throw exception")
-    public BookDto update(@PathVariable Long id,
-                          @RequestBody @Valid CreateBookRequestDto requestDto) {
+    public BookResponseDto update(@PathVariable Long id,
+                                  @RequestBody @Valid BookRequestDto requestDto) {
         return bookService.update(id, requestDto);
     }
 
@@ -72,7 +72,7 @@ public class BookController {
     @GetMapping("/search")
     @Operation(summary = "Search a book by parameters",
             description = "Search for a book by title, author, or both")
-    public List<BookDto> search(BookSearchParametersDto searchParameters) {
+    public List<BookResponseDto> search(BookSearchParametersDto searchParameters) {
         return bookService.search(searchParameters);
     }
 }

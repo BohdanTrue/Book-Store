@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: insert-admin-role-to-admin-in-users_roles-table
-      author: Bohdan
+      author: Bohdan Bilko
       preConditions:
         - sqlCheck:
             expectedResult: 1
