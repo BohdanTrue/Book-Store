@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsExclude;
 import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.apache.commons.lang3.builder.ToStringExclude;
@@ -41,9 +43,8 @@ public class Book {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ToStringExclude
-    @EqualsExclude
-    @HashCodeExclude
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany
     @JoinTable(
             name = "books_categories",
