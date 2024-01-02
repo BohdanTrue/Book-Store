@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-role-table
-      author: Bohdan
+      author: Bohdan Bilko
       changes:
         - createTable:
             tableName: roles
@@ -12,7 +12,6 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: role
                   type: varchar(255)

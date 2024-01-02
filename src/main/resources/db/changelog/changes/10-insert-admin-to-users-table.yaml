@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: insert-admin-to-users-table
-      author: Bohdan
+      author: Bohdan Bilko
       changes:
         - insert:
             tableName: users

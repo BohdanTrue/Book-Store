@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: add-is-deleted-column-to-user-table
-      author: Bohdan
+      author: Bohdan Bilko
       changes:
         - addColumn:
             tableName: users

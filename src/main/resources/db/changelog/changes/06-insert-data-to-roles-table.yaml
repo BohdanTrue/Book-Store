@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: insert-roles
-      author: Bohdan
+      author: Bohdan Bilko
       changes:
         - insert:
             tableName: roles

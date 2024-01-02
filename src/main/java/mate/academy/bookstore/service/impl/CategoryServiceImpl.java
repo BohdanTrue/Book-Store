@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.category.CategoryRequestDto;
 import mate.academy.bookstore.dto.category.CategoryResponseDto;
-import mate.academy.bookstore.exception.CategoryNotFoundException;
+import mate.academy.bookstore.exception.EntityNotFoundException;
 import mate.academy.bookstore.mapper.CategoryMapper;
 import mate.academy.bookstore.model.Category;
 import mate.academy.bookstore.repository.category.CategoryRepository;
@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDto getById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException(CANNOT_FIND_CATEGORY_BY_ID + id));
+                .orElseThrow(() -> new EntityNotFoundException(CANNOT_FIND_CATEGORY_BY_ID + id));
         return categoryMapper.toDto(category);
     }
 
@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
             updatedCategory.setId(id);
             return categoryMapper.toDto(categoryRepository.save(updatedCategory));
         }
-        throw new CategoryNotFoundException(CANNOT_UPDATE_CATEGORY_BY_ID + id);
+        throw new EntityNotFoundException(CANNOT_UPDATE_CATEGORY_BY_ID + id);
     }
 
     @Override

@@ -41,10 +41,10 @@ public class Book {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToMany
     @ToStringExclude
     @EqualsExclude
     @HashCodeExclude
+    @ManyToMany
     @JoinTable(
             name = "books_categories",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -52,8 +52,10 @@ public class Book {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @Column
     private String description;
 
+    @Column
     private String coverImage;
 
     @Column(nullable = false)
