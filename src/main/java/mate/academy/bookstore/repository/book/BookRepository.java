@@ -1,6 +1,7 @@
 package mate.academy.bookstore.repository.book;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.bookstore.model.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,7 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
 
     @Query("SELECT b FROM Book b JOIN FETCH b.categories")
     Page<Book> findAll(Pageable pageable);
+
+    @Query("SELECT b FROM Book b JOIN FETCH b.categories WHERE b.id = :bookId")
+    Optional<Book> findById(Long bookId);
 }
