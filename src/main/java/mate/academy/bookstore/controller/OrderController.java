@@ -1,8 +1,7 @@
 package mate.academy.bookstore.controller;
 
-import java.util.List;
-
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.order.AddressRequestDto;
 import mate.academy.bookstore.dto.order.OrderItemResponseDto;
@@ -74,7 +73,6 @@ public class OrderController {
             @PathVariable(name = "order-id") Long orderId) {
         return orderItemService.getAllById(orderId);
     }
-
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(
