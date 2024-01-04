@@ -43,7 +43,7 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
         return Optional.ofNullable(parameters.titles())
                 .filter(titles -> titles.length > 0)
                 .map(titles -> spec.and(bookSpecificationProviderManager
-                        .getSpecificationProvider("title").getSpecification(titles)))
+                        .getSpecificationProvider("author").getSpecification(titles)))
                 .orElse(spec);
     }
 }
