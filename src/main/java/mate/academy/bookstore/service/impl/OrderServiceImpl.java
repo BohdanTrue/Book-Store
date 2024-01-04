@@ -17,6 +17,7 @@ import mate.academy.bookstore.model.Order;
 import mate.academy.bookstore.model.OrderItem;
 import mate.academy.bookstore.model.ShoppingCart;
 import mate.academy.bookstore.model.User;
+import mate.academy.bookstore.repository.cartitem.CartItemRepository;
 import mate.academy.bookstore.repository.order.OrderRepository;
 import mate.academy.bookstore.repository.orderitem.OrderItemRepository;
 import mate.academy.bookstore.repository.shoppingcart.ShoppingCartRepository;
@@ -36,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final UserRepository userRepository;
     private final OrderItemRepository orderItemRepository;
+    private final CartItemRepository cartItemRepository;
     private final OrderMapper orderMapper;
 
     @Override
@@ -75,6 +77,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setOrderItems(orderItems);
         order.setOrderDate(LocalDateTime.now());
+        cartItemRepository.deleteAll(shoppingCart.getCartItems());
         return orderMapper.toDto(order);
     }
 
