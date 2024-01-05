@@ -12,6 +12,7 @@ import mate.academy.bookstore.dto.order.OrderStatusRequestDto;
 import mate.academy.bookstore.model.User;
 import mate.academy.bookstore.service.OrderItemService;
 import mate.academy.bookstore.service.OrderService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -50,9 +51,10 @@ public class OrderController {
             summary = "Get orders",
             description = "Get user orders")
     @GetMapping
-    public List<OrderResponseDto> getUserOrders(Authentication authentication) {
+    public List<OrderResponseDto> getUserOrders(Authentication authentication,
+                                                Pageable pageable) {
         User user = (User) authentication.getPrincipal();
-        return orderService.getUserOrders(user.getId());
+        return orderService.getUserOrders(user.getId(), pageable);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -73,8 +75,9 @@ public class OrderController {
             description = "Get all order items by order id")
     @GetMapping("/{order-id}/items")
     public List<OrderItemResponseDto> getAllById(
-            @PathVariable(name = "order-id") Long orderId) {
-        return orderItemService.getAllById(orderId);
+            @PathVariable(name = "order-id") Long orderId,
+            Pageable pageable) {
+        return orderItemService.getOrderItems(orderId, pageable);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

@@ -23,6 +23,7 @@ import mate.academy.bookstore.repository.orderitem.OrderItemRepository;
 import mate.academy.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import mate.academy.bookstore.repository.user.UserRepository;
 import mate.academy.bookstore.service.OrderService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,10 +84,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponseDto> getUserOrders(Long userId) {
-        List<Order> orders = orderRepository.findOrdersByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        CANNOT_FIND_ORDER_USER_ID + userId));
+    public List<OrderResponseDto> getUserOrders(Long userId, Pageable pageable) {
+        List<Order> orders = orderRepository.findOrdersByUserId(userId, pageable);
         return orders.stream().map(orderMapper::toDto).collect(Collectors.toList());
     }
 
