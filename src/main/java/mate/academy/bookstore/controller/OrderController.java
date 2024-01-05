@@ -1,6 +1,8 @@
 package mate.academy.bookstore.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.order.AddressRequestDto;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Orders management", description = "Endpoints for managing orders")
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
@@ -36,7 +39,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public OrderResponseDto placeOrder(
-            @RequestBody AddressRequestDto requestDto,
+            @RequestBody @Valid AddressRequestDto requestDto,
             Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return orderService.placeOrder(requestDto, user.getId());

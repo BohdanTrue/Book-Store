@@ -1,8 +1,9 @@
 package mate.academy.bookstore.dto.order;
 
 import lombok.Data;
+import mate.academy.bookstore.model.Order;
 
 @Data
 public class OrderStatusRequestDto {
-    private String status;
+    private Order.Status status;
 }

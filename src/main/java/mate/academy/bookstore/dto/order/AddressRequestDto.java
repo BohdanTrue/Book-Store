@@ -1,8 +1,8 @@
 package mate.academy.bookstore.dto.order;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record AddressRequestDto(
-        @NotNull(message = "Address cannot be null")
+        @NotBlank(message = "Address cannot be null")
         String shippingAddress) {
 }

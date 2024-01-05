@@ -71,9 +71,10 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setBook(cartItem.getBook());
             orderItem.setPrice(cartItem.getBook().getPrice());
             orderItem.setQuantity(cartItem.getQuantity());
-            orderItemRepository.save(orderItem);
             orderItems.add(orderItem);
         }
+
+        orderItemRepository.saveAll(orderItems);
 
         order.setOrderItems(orderItems);
         order.setOrderDate(LocalDateTime.now());
@@ -92,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDto updateOrderStatus(Long orderId, OrderStatusRequestDto requestDto) {
         Order orderById = orderRepository.findOrderById(orderId);
-        orderById.setStatus(Order.Status.valueOf(requestDto.getStatus()));
+        orderById.setStatus(requestDto.getStatus());
         orderRepository.save(orderById);
         return orderMapper.toDto(orderById);
     }
