@@ -6,5 +6,5 @@ import mate.academy.bookstore.dto.order.OrderItemResponseDto;
 public interface OrderItemService {
     List<OrderItemResponseDto> getAllById(Long orderId);
 
-    OrderItemResponseDto getItemById(Long orderId, Long itemId);
+    OrderItemResponseDto getItemById(Long id, Long orderId);
 }

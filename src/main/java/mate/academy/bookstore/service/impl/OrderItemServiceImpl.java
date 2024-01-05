@@ -34,10 +34,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public OrderItemResponseDto getItemById(Long orderId, Long itemId) {
-        OrderItem orderItem = orderItemRepository.findOrderItemByOrderIdAndItemId(orderId, itemId)
+    public OrderItemResponseDto getItemById(Long id, Long orderId) {
+        OrderItem orderItem = orderItemRepository.findByIdAndOrderId(id, orderId)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        CANNOT_FIND_ORDER_ITEM_BY_ITEM_ID + itemId));
+                        CANNOT_FIND_ORDER_ITEM_BY_ITEM_ID + id));
 
         return orderItemMapper.toDto(orderItem);
     }

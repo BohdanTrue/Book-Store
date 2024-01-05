@@ -85,6 +85,6 @@ public class OrderController {
     public OrderItemResponseDto getItemById(
             @PathVariable(name = "order-id") Long orderId,
             @PathVariable(name = "item-id") Long itemId) {
-        return orderItemService.getItemById(orderId, itemId);
+        return orderItemService.getItemById(itemId, orderId);
     }
 }
