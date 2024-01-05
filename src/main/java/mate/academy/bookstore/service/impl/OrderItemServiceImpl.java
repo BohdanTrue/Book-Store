@@ -1,7 +1,6 @@
 package mate.academy.bookstore.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.order.OrderItemResponseDto;
 import mate.academy.bookstore.exception.EntityNotFoundException;
@@ -24,9 +23,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     public List<OrderItemResponseDto> getOrderItems(Long orderId, Pageable pageable) {
         List<OrderItem> orderItems = orderItemRepository.findAllByOrderId(orderId, pageable);
 
-        return orderItems.stream()
-                .map(orderItemMapper::toDto)
-                .collect(Collectors.toList());
+        return orderItemMapper.toDtos(orderItems);
     }
 
     @Override

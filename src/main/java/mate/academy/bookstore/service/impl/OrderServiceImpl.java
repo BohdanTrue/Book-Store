@@ -53,17 +53,57 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order();
 
-        BigDecimal total = shoppingCart.getCartItems().stream()
-                .map(item -> item.getBook().getPrice()
-                        .multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//        BigDecimal total = shoppingCart.getCartItems().stream()
+//                .map(item -> item.getBook().getPrice()
+//                        .multiply(BigDecimal.valueOf(item.getQuantity())))
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        order.setTotal(total);
+        order.setTotal(getTotal(shoppingCart));
         order.setUser(user);
         order.setShippingAddress(requestDto.shippingAddress());
         order.setStatus(Order.Status.PENDING);
         order = orderRepository.save(order);
 
+//        Set<OrderItem> orderItems = new HashSet<>();
+//        for (CartItem cartItem : shoppingCart.getCartItems()) {
+//            OrderItem orderItem = new OrderItem();
+//
+//            orderItem.setOrder(order);
+//            orderItem.setBook(cartItem.getBook());
+//            orderItem.setPrice(cartItem.getBook().getPrice());
+//            orderItem.setQuantity(cartItem.getQuantity());
+//            orderItems.add(orderItem);
+//        }
+
+        Set<OrderItem> orderItems = convertCartItemsToOrderItems(shoppingCart, order);
+
+        orderItemRepository.saveAll(orderItems);
+
+        order.setOrderItems(orderItems);
+        order.setOrderDate(LocalDateTime.now());
+        cartItemRepository.deleteAll(shoppingCart.getCartItems());
+
+        return orderMapper.toDto(order);
+    }
+
+    @Override
+    public List<OrderResponseDto> getUserOrders(Long userId, Pageable pageable) {
+        List<Order> orders = orderRepository.findOrdersByUserId(userId, pageable);
+
+        return orderMapper.toDtos(orders);
+    }
+
+    @Override
+    @Transactional
+    public OrderResponseDto updateOrderStatus(Long orderId, OrderStatusRequestDto requestDto) {
+        Order orderById = orderRepository.findOrderById(orderId);
+        orderById.setStatus(requestDto.getStatus());
+        orderRepository.save(orderById);
+
+        return orderMapper.toDto(orderById);
+    }
+
+    private Set<OrderItem> convertCartItemsToOrderItems(ShoppingCart shoppingCart, Order order) {
         Set<OrderItem> orderItems = new HashSet<>();
         for (CartItem cartItem : shoppingCart.getCartItems()) {
             OrderItem orderItem = new OrderItem();
@@ -74,26 +114,13 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setQuantity(cartItem.getQuantity());
             orderItems.add(orderItem);
         }
-
-        orderItemRepository.saveAll(orderItems);
-
-        order.setOrderItems(orderItems);
-        order.setOrderDate(LocalDateTime.now());
-        cartItemRepository.deleteAll(shoppingCart.getCartItems());
-        return orderMapper.toDto(order);
+        return orderItems;
     }
 
-    @Override
-    public List<OrderResponseDto> getUserOrders(Long userId, Pageable pageable) {
-        List<Order> orders = orderRepository.findOrdersByUserId(userId, pageable);
-        return orders.stream().map(orderMapper::toDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public OrderResponseDto updateOrderStatus(Long orderId, OrderStatusRequestDto requestDto) {
-        Order orderById = orderRepository.findOrderById(orderId);
-        orderById.setStatus(requestDto.getStatus());
-        orderRepository.save(orderById);
-        return orderMapper.toDto(orderById);
+    private BigDecimal getTotal(ShoppingCart shoppingCart) {
+        return shoppingCart.getCartItems().stream()
+                .map(item -> item.getBook().getPrice()
+                        .multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
