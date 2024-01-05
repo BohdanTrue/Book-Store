@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookstore.dto.order.AddressRequestDto;
 import mate.academy.bookstore.dto.order.OrderResponseDto;
@@ -53,27 +52,11 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order();
 
-//        BigDecimal total = shoppingCart.getCartItems().stream()
-//                .map(item -> item.getBook().getPrice()
-//                        .multiply(BigDecimal.valueOf(item.getQuantity())))
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
         order.setTotal(getTotal(shoppingCart));
         order.setUser(user);
         order.setShippingAddress(requestDto.shippingAddress());
         order.setStatus(Order.Status.PENDING);
         order = orderRepository.save(order);
-
-//        Set<OrderItem> orderItems = new HashSet<>();
-//        for (CartItem cartItem : shoppingCart.getCartItems()) {
-//            OrderItem orderItem = new OrderItem();
-//
-//            orderItem.setOrder(order);
-//            orderItem.setBook(cartItem.getBook());
-//            orderItem.setPrice(cartItem.getBook().getPrice());
-//            orderItem.setQuantity(cartItem.getQuantity());
-//            orderItems.add(orderItem);
-//        }
 
         Set<OrderItem> orderItems = convertCartItemsToOrderItems(shoppingCart, order);
 
