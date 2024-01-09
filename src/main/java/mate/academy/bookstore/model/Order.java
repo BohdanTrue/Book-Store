@@ -16,6 +16,7 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
@@ -27,6 +28,7 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @SQLDelete(sql = "UPDATE categories c SET c.is_deleted = true WHERE c.id=?")
 @Where(clause = "is_deleted = false")
+@Accessors(chain = true)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
