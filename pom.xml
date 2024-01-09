@@ -26,6 +26,7 @@
         <testcontainers.version>1.19.3</testcontainers.version>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
