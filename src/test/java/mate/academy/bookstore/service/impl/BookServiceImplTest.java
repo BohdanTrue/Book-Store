@@ -10,6 +10,8 @@ import mate.academy.bookstore.mapper.BookMapper;
 import mate.academy.bookstore.model.Book;
 import mate.academy.bookstore.repository.book.BookRepository;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,28 +24,32 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceImplTest {
-    @InjectMocks
-    private BookServiceImpl bookService;
-
     @Mock
     private BookRepository bookRepository;
-
     @Mock
     private BookMapper bookMapper;
+    @InjectMocks
+    private BookServiceImpl bookService;
+    private Book book;
+    private BookResponseDto bookResponseDto;
 
-    @Test
-    void getAll_withPageAble_ReturnOk() {
-        Book book = new Book()
+    @BeforeEach
+    void setUp() {
+        book = new Book()
                 .setId(1L)
                 .setAuthor("Robert Martin")
                 .setTitle("Clean Code");
 
-        List<Book> books = List.of(book);
-
-        BookResponseDto bookResponseDto = new BookResponseDto()
+        bookResponseDto = new BookResponseDto()
                 .setId(book.getId())
                 .setAuthor(book.getAuthor())
                 .setTitle(book.getTitle());
+    }
+
+    @DisplayName("Get all books with pageable")
+    @Test
+    void getAll_withPageable_ReturnOk() {
+        List<Book> books = List.of(book);
 
         Pageable pageable = PageRequest.of(0, 5);
         Page<Book> page = new PageImpl<>(books, pageable, books.size());
@@ -56,6 +62,6 @@ class BookServiceImplTest {
 
         assertNotNull(actual);
         assertEquals(1, actual.size());
-        EqualsBuilder.reflectionEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 }

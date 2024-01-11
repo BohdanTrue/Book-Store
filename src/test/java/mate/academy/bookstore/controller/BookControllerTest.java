@@ -129,6 +129,6 @@ class BookControllerTest {
         );
 
         assertNotNull(actual);
-        EqualsBuilder.reflectionEquals(expected, actual);
+        EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
 }
