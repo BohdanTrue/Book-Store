@@ -21,6 +21,7 @@ class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
     private Book book;
+
     @BeforeEach
     void setUp() {
         book = new Book()
