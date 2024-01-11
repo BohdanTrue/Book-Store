@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
-
 import mate.academy.bookstore.dto.category.CategoryResponseDto;
 import mate.academy.bookstore.mapper.CategoryMapper;
 import mate.academy.bookstore.model.Category;
