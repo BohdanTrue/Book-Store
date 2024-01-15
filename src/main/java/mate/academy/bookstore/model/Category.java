@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -17,6 +18,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE categories c SET c.is_deleted = true WHERE c.id=?")
 @Where(clause = "is_deleted = false")
+@Accessors(chain = true)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
