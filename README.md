@@ -13,7 +13,10 @@ ___A comprehensive Library Management API tailored for seamless integration into
 - [Swagger](https://swagger.io/): provides a framework for generating interactive API documentation, allowing developers to understand, test, and use APIs more easily.
 - [Docker](https://www.docker.com/): provides a consistent and reproducible way to deploy applications across different environments.
 - [Postman](https://www.postman.com/): allows developers to create and send HTTP requests to test APIs, monitor responses, and automate testing workflows.
-
+- [Testcontainers](https://testcontainers.com/) is an open source framework for providing throwaway, lightweight instances of databases, message brokers, web browsers, or just about anything that can run in a Docker container.
+- [Mockito](https://site.mockito.org/) Mockito is a popular open-source Java testing framework that allows the creation of mock objects in unit tests.
+- [JUnit](https://junit.org/junit5/) JUnit is a widely used open-source testing framework for Java. It provides annotations and assertions to facilitate the writing and execution of unit tests.
+  
 ###🚦Endpoints of controllers
 - _AuthenticationController_: handles user registration and authorization.
 - _BookController_: handles book-related tasks, including the creation, modification, deletion, and retrieval of book information.
@@ -72,5 +75,9 @@ To overcome these challenges and establish a robust and secure authentication an
 - Custom UserDetailsService: A custom UserDetailsService was implemented to manage user roles, permissions, and access control. This customization allowed for user management tailored to specific requirements while maintaining security.
 
 By solving these challenges and implementing solutions, a secure and reliable authentication and authorization system using Spring Security was established. This ensures the protection of user data and sensitive operations within our Online Book Store API, creating a secure and trustworthy environment for users.
+
+###⚙️Possible Improvements
+Your contributions and insights are highly valued! 
+While the current implementation provides a solid foundation for testing and development, there's always room for improvement. I encourage community members to get involved and contribute to the enhancement of our testing strategies. Make comment with your suggestion or send me a message to telegram: @therealbadil
 
 ###🎯Happy coding!
