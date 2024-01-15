@@ -21,6 +21,7 @@ class ShoppingCartRepositoryTest {
     private ShoppingCartRepository shoppingCartRepository;
     private User user;
     private ShoppingCart shoppingCart;
+
     @BeforeEach
     void setUp() {
         user = new User()

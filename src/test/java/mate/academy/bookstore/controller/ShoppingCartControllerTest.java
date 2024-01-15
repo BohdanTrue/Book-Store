@@ -1,9 +1,6 @@
 package mate.academy.bookstore.controller;
 
-import static org.springframework.security.test.web.servlet.setup
- .SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,6 +28,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -61,7 +61,7 @@ class ShoppingCartControllerTest {
                 .setShippingAddress("Kyiv")
                 .setRoles(Set.of(userRole));
 
-        Book book = new Book()
+        book = new Book()
                 .setId(1L)
                 .setAuthor("Robert Martin")
                 .setTitle("Clean Code")
@@ -73,6 +73,11 @@ class ShoppingCartControllerTest {
                 .setBookId(book.getId())
                 .setBookTitle(book.getTitle())
                 .setQuantity(20);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                        user, user.getPassword(), user.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @BeforeAll
@@ -180,8 +185,10 @@ class ShoppingCartControllerTest {
                 .setUserId(user.getId())
                 .setCartItems(Set.of(updatedCartItemResponseDto));
 
-        ShoppingCartResponseDto actual = objectMapper.readValue(result.getResponse().getContentAsByteArray(),
-                ShoppingCartResponseDto.class);
+        ShoppingCartResponseDto actual = objectMapper.readValue(
+                result.getResponse().getContentAsByteArray(),
+                ShoppingCartResponseDto.class
+        );
 
         EqualsBuilder.reflectionEquals(expected, actual, "id");
     }
